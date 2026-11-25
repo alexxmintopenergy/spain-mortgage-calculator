@@ -3,6 +3,7 @@ const form = byId('calculator');
 const agentOptions = byId('agent-options');
 const productSettings = byId('product-settings');
 const productList = byId('product-list');
+const languageSelect = byId('language');
 const priceField = byId('price');
 const feeField = byId('fees');
 const scaleFees = byId('scale-fees');
@@ -12,8 +13,12 @@ const wholeEuros = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 0 });
 const editableEuros = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 2 });
 const percentage = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 2 });
 const euros = (value) => wholeEuros.format(value) + '\u00a0€';
-const monthlyEuros = (value) => editableEuros.format(Math.round(value * 100) / 100) + '\u00a0€';
-const percent = (value) => percentage.format(value) + '\u00a0%';
+const displayNumber = (formatter, value) => {
+  const number = formatter.format(value);
+  return currentLanguage === 'en' ? number.replace(',', '.') : number;
+};
+const monthlyEuros = (value) => displayNumber(editableEuros, Math.round(value * 100) / 100) + '\u00a0€';
+const percent = (value) => displayNumber(percentage, value) + '\u00a0%';
 let feeReference = { price: readNumber(priceField), amount: readNumber(feeField) };
 
 function readNumber(field) {
@@ -65,18 +70,22 @@ function calculate(price, settings) {
   return { principal, deposit, tax, commission, start, payment, monthly, interest, 'closing-fees': fees };
 }
 
-function addProduct(name, discount, cost, custom = false) {
+function addProduct(nameKey, discount, cost, custom = false) {
   const product = byId('product-template').content.firstElementChild.cloneNode(true);
   const title = product.querySelector('.product-title');
   const nameField = product.querySelector('.name-input');
-  title.textContent = name;
+  title.dataset.i18n = nameKey;
   product.querySelector('.product-discount').value = discount;
   product.querySelector('.product-cost').value = cost;
+  translate(product);
   productList.append(product);
   if (custom) {
     nameField.closest('label').hidden = false;
     nameField.addEventListener('input', () => {
-      title.textContent = nameField.value.trim() || name;
+      const name = nameField.value.trim();
+      if (name) delete title.dataset.i18n;
+      else title.dataset.i18n = nameKey;
+      title.textContent = name || t(nameKey);
     });
     const remove = product.querySelector('.remove-product');
     remove.hidden = false;
@@ -120,11 +129,10 @@ function showProductImpact(product, principal, months, baseRate, discountLimit, 
   const benefit = Math.round((saving - product.cost) * 100) / 100;
   const outcome = document.createElement('strong');
   outcome.classList.toggle('loss', benefit < 0);
-  outcome.textContent = benefit === 0 ? 'рівноцінно'
-    : (benefit > 0 ? 'вигода ' : 'збиток ') + monthlyEuros(Math.abs(benefit)) + '/міс.';
+  outcome.textContent = benefit === 0 ? t('even')
+    : t(benefit > 0 ? 'gain' : 'loss', { amount: monthlyEuros(Math.abs(benefit)) });
   product.hint.replaceChildren(
-    'Знижка економить ' + monthlyEuros(saving) + '/міс., продукт коштує '
-    + monthlyEuros(product.cost) + '/міс. → ', outcome
+    t('impact', { saving: monthlyEuros(saving), cost: monthlyEuros(product.cost) }), outcome
   );
 }
 
@@ -138,9 +146,7 @@ function update(event) {
   if (edited === priceField && scaleFees.checked && Number.isFinite(price) && Number.isFinite(fee)) {
     feeField.value = editableEuros.format(price / feeReference.price * feeReference.amount);
   }
-  byId('fees-hint').textContent = scaleFees.checked
-    ? 'Орієнтовно, пропорційно ціні житла. Суму можна уточнити вручну.'
-    : 'Фіксована сума для поточної ціни та всіх сценаріїв.';
+  byId('fees-hint').textContent = t(scaleFees.checked ? 'feesScaled' : 'feesFixed');
 
   const hasAgent = byId('has-agent').checked;
   agentOptions.hidden = !hasAgent;
@@ -168,8 +174,8 @@ function update(event) {
   markInvalid(discountLimitField, !Number.isFinite(discountLimit));
   byId('product-error').hidden = !invalidProducts;
   error.hidden = invalid.length === 0;
-  error.textContent = invalid.length ? 'Перевірте значення в полях «' + invalid.join('», «') + '».' : '';
-  byId('tax-label').textContent = isNew ? 'Податок (IVA + AJD)' : 'Податок (ITP)';
+  error.textContent = invalid.length ? t('invalidFields', { fields: invalid.join(', ') }) : '';
+  byId('tax-label').textContent = t('tax') + (isNew ? ' (IVA + AJD)' : ' (ITP)');
   if (invalid.length || invalidProducts) {
     for (const field of document.querySelectorAll('[data-result]')) field.textContent = '—';
     for (const row of comparisonRows) row.classList.remove('selected');
@@ -190,7 +196,7 @@ function update(event) {
   };
   const result = calculate(values.price, settings);
   for (const [id, amount] of Object.entries(result)) byId(id).textContent = euros(amount);
-  byId('share').textContent = percentage.format(result.start / values.price * 100) + '\u00a0% від ціни';
+  byId('share').textContent = t('priceShare', { percent: percent(result.start / values.price * 100) });
   byId('bank-products').textContent = euros(settings.products);
   byId('final-rate').textContent = percent(settings.rate);
   const effective = rateWithProducts(result.principal, settings.rate, settings.months, settings.products);
@@ -210,12 +216,19 @@ function update(event) {
   }
 }
 
-addProduct('Страхування життя', '0,35', '120,93');
-addProduct('Страхування житла', '0,15', '50');
-addProduct('Сигналізація (Verisure)', '0,15', '66');
-addProduct('Надходження доходу + картка', '0,35', '0');
+setLanguage(savedLanguage());
+languageSelect.value = currentLanguage;
+languageSelect.addEventListener('change', () => {
+  setLanguage(languageSelect.value);
+  saveLanguage();
+  update();
+});
+addProduct('life', '0,35', '120,93');
+addProduct('home', '0,15', '50');
+addProduct('alarm', '0,15', '66');
+addProduct('income', '0,35', '0');
 byId('add-product').addEventListener('click', () => {
-  addProduct('Мій продукт', '0', '0', true);
+  addProduct('custom', '0', '0', true);
   update();
 });
 productSettings.addEventListener('input', update);

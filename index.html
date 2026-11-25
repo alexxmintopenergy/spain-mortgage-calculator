@@ -3,76 +3,85 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Калькулятор іпотеки · Валенсійська громада</title>
-  <meta name="description" content="Розрахунок першого внеску, податків і щомісячного платежу за житло у Валенсійській громаді.">
+  <title data-i18n="title">Калькулятор іпотеки · Валенсійська громада</title>
+  <meta name="description" data-i18n-content="description" content="Розрахунок першого внеску, податків і щомісячного платежу за житло у Валенсійській громаді.">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <main>
     <header class="intro">
-      <p class="location">Іспанія · Валенсійська громада</p>
-      <h1>Калькулятор купівлі житла</h1>
+      <p class="location" data-i18n="location">Іспанія · Валенсійська громада</p>
+      <h1 data-i18n="heading">Калькулятор купівлі житла</h1>
+      <div class="language-control">
+        <label for="language" data-i18n="language">Мова</label>
+        <select id="language">
+          <option value="uk" lang="uk">Українська</option>
+          <option value="ru" lang="ru">Русский</option>
+          <option value="en" lang="en">English</option>
+          <option value="es" lang="es">Español</option>
+        </select>
+      </div>
     </header>
 
     <div class="layout">
-      <form id="calculator" class="panel form" aria-label="Параметри розрахунку">
+      <form id="calculator" class="panel form" aria-label="Параметри розрахунку" data-i18n-label="settings">
         <section class="section" aria-labelledby="purchase-title">
-          <h2 id="purchase-title">Житло та витрати</h2>
+          <h2 id="purchase-title" data-i18n="purchase">Житло та витрати</h2>
           <div class="field">
-            <label for="price">Ціна житла</label>
+            <label for="price" data-i18n="price">Ціна житла</label>
             <div class="control"><input id="price" type="text" inputmode="decimal" value="330 000" data-money data-min="0.01" required><span class="unit" aria-hidden="true">€</span></div>
           </div>
           <fieldset>
-            <legend>Тип житла</legend>
+            <legend data-i18n="propertyType">Тип житла</legend>
             <div class="choices">
-              <label><input type="radio" name="property" value="new" checked><span>Новобудова</span></label>
-              <label><input type="radio" name="property" value="resale"><span>Вторинне</span></label>
+              <label><input type="radio" name="property" value="new" checked><span data-i18n="newBuild">Новобудова</span></label>
+              <label><input type="radio" name="property" value="resale"><span data-i18n="resale">Вторинне</span></label>
             </div>
           </fieldset>
           <div>
-            <label class="check"><input id="has-agent" type="checkbox" aria-controls="agent-options"> Ріелтор</label>
+            <label class="check"><input id="has-agent" type="checkbox" aria-controls="agent-options"> <span data-i18n="agent">Ріелтор</span></label>
             <div id="agent-options" class="agent" hidden>
               <div class="field">
-                <label for="agent-rate">Комісія ріелтора</label>
+                <label for="agent-rate" data-i18n="agentRate">Комісія ріелтора</label>
                 <div class="control"><input id="agent-rate" type="text" inputmode="decimal" value="4" data-max="100" required><span class="unit" aria-hidden="true">%</span></div>
               </div>
-              <label class="check"><input id="agent-iva" type="checkbox" checked> + IVA 21% на комісію ріелтора</label>
+              <label class="check"><input id="agent-iva" type="checkbox" checked> <span data-i18n="agentVat">+ IVA 21% на комісію ріелтора</span></label>
             </div>
           </div>
         </section>
 
         <details>
-          <summary>Нотаріус + реєстр + гестор + оцінка</summary>
+          <summary data-i18n="feesHeading">Нотаріус + реєстр + гестор + оцінка</summary>
           <div class="field">
-            <label for="fees">Витрати на оформлення</label>
+            <label for="fees" data-i18n="fees">Витрати на оформлення</label>
             <div class="control"><input id="fees" type="text" inputmode="decimal" value="2 500" data-money aria-describedby="fees-hint" required><span class="unit" aria-hidden="true">€</span></div>
-            <label class="check"><input id="scale-fees" type="checkbox" checked> Перераховувати зі зміною ціни житла</label>
+            <label class="check"><input id="scale-fees" type="checkbox" checked> <span data-i18n="scaleFees">Перераховувати зі зміною ціни житла</span></label>
             <p id="fees-hint" class="hint"></p>
           </div>
         </details>
 
         <details>
-          <summary>Іпотека</summary>
+          <summary data-i18n="mortgage">Іпотека</summary>
           <div class="section">
             <div class="pair">
               <div class="field">
-                <label for="ltv">Частка від ціни</label>
+                <label for="ltv" data-i18n="ltv">Частка від ціни</label>
                 <div class="control"><input id="ltv" type="text" inputmode="decimal" value="80" data-max="100" required><span class="unit" aria-hidden="true">%</span></div>
               </div>
               <div class="field">
-                <label for="rate">Базова річна ставка</label>
+                <label for="rate" data-i18n="baseRate">Базова річна ставка</label>
                 <div class="control"><input id="rate" type="text" inputmode="decimal" value="3,95" data-max="100" required><span class="unit" aria-hidden="true">%</span></div>
               </div>
             </div>
             <div class="field">
-              <label for="years">Строк</label>
-              <div class="control"><input id="years" type="text" inputmode="numeric" value="30" data-min="1" data-integer required><span class="unit" aria-hidden="true">років</span></div>
+              <label for="years" data-i18n="term">Строк</label>
+              <div class="control"><input id="years" type="text" inputmode="numeric" value="30" data-min="1" data-integer required><span class="unit" aria-hidden="true" data-i18n="years">років</span></div>
             </div>
           </div>
         </details>
 
         <details>
-          <summary>Податкові ставки</summary>
+          <summary data-i18n="taxSettings">Податкові ставки</summary>
           <div class="tax-fields">
             <div class="field">
               <label for="iva">IVA</label>
@@ -87,7 +96,7 @@
               <div class="control"><input id="itp" type="text" inputmode="decimal" value="9" data-max="100" required><span class="unit" aria-hidden="true">%</span></div>
             </div>
           </div>
-          <p class="hint">Для новобудови застосовуються IVA та AJD, для вторинного житла — ITP.</p>
+          <p class="hint" data-i18n="taxHint">Для новобудови застосовуються IVA та AJD, для вторинного житла — ITP.</p>
         </details>
         <p id="error" class="error" role="status" hidden></p>
       </form>
@@ -95,62 +104,62 @@
       <div class="results">
         <section class="panel start" aria-labelledby="start-title">
           <div class="hero" aria-live="polite" aria-atomic="true">
-            <h2 id="start-title">Потрібно на старті</h2>
+            <h2 id="start-title" data-i18n="upfront">Потрібно на старті</h2>
             <strong id="start" class="hero-amount" data-result>—</strong>
             <span id="share" class="percent" data-result>—</span>
           </div>
           <dl class="inside rows">
-            <div><dt>Перший внесок</dt><dd id="deposit" data-result>—</dd></div>
-            <div><dt id="tax-label">Податок</dt><dd id="tax" data-result>—</dd></div>
-            <div><dt>Нотаріус та інше</dt><dd id="closing-fees" data-result>—</dd></div>
-            <div><dt>Ріелтор</dt><dd id="commission" data-result>—</dd></div>
+            <div><dt data-i18n="downPayment">Перший внесок</dt><dd id="deposit" data-result>—</dd></div>
+            <div><dt id="tax-label" data-i18n="tax">Податок</dt><dd id="tax" data-result>—</dd></div>
+            <div><dt data-i18n="closingFees">Нотаріус та інше</dt><dd id="closing-fees" data-result>—</dd></div>
+            <div><dt data-i18n="agent">Ріелтор</dt><dd id="commission" data-result>—</dd></div>
           </dl>
         </section>
 
         <section class="panel inside" aria-labelledby="monthly-title">
-          <h2 id="monthly-title">Щомісячно</h2>
+          <h2 id="monthly-title" data-i18n="monthly">Щомісячно</h2>
           <dl class="rows">
-            <div><dt>Фінальна річна ставка</dt><dd id="final-rate" data-result>—</dd></div>
-            <div><dt>Платіж за кредитом</dt><dd id="payment" data-result>—</dd></div>
-            <div><dt>Продукти банку</dt><dd id="bank-products" data-result>—</dd></div>
-            <div class="subtotal"><dt>Разом на місяць</dt><dd id="monthly" data-result>—</dd></div>
-            <div><dt>Фактична ставка з продуктами</dt><dd id="effective-rate" data-result>—</dd></div>
+            <div><dt data-i18n="finalRate">Фінальна річна ставка</dt><dd id="final-rate" data-result>—</dd></div>
+            <div><dt data-i18n="payment">Платіж за кредитом</dt><dd id="payment" data-result>—</dd></div>
+            <div><dt data-i18n="bankProducts">Продукти банку</dt><dd id="bank-products" data-result>—</dd></div>
+            <div class="subtotal"><dt data-i18n="monthlyTotal">Разом на місяць</dt><dd id="monthly" data-result>—</dd></div>
+            <div><dt data-i18n="effectiveRate">Фактична ставка з продуктами</dt><dd id="effective-rate" data-result>—</dd></div>
           </dl>
-          <p class="hint">Фактична ставка — річна ставка, за якої платіж за кредитом дорівнює сумі щомісячних витрат. За нульової суми іпотеки вона не визначається.</p>
+          <p class="hint" data-i18n="effectiveHint">Фактична ставка — річна ставка, за якої платіж за кредитом дорівнює сумі щомісячних витрат. За нульової суми іпотеки вона не визначається.</p>
         </section>
 
         <section class="panel inside" aria-labelledby="credit-title">
-          <h2 id="credit-title">Сума іпотеки та відсотки</h2>
+          <h2 id="credit-title" data-i18n="credit">Сума іпотеки та відсотки</h2>
           <dl class="rows">
-            <div><dt>Сума іпотеки</dt><dd id="principal" data-result>—</dd></div>
-            <div><dt>Переплата відсотків за весь строк</dt><dd id="interest" data-result>—</dd></div>
+            <div><dt data-i18n="principal">Сума іпотеки</dt><dd id="principal" data-result>—</dd></div>
+            <div><dt data-i18n="interest">Переплата відсотків за весь строк</dt><dd id="interest" data-result>—</dd></div>
           </dl>
         </section>
       </div>
     </div>
 
     <details class="panel inside product-panel">
-      <summary>Продукти банку</summary>
+      <summary data-i18n="bankProducts">Продукти банку</summary>
       <div id="product-settings" class="product-settings">
-        <p class="hint">Вигода кожного продукту показує, як зміниться платіж, якщо додати або прибрати тільки його.</p>
+        <p class="hint" data-i18n="productHint">Вигода кожного продукту показує, як зміниться платіж, якщо додати або прибрати тільки його.</p>
         <div class="field discount-limit">
-          <label for="discount-limit">Максимальна сумарна знижка</label>
-          <div class="control"><input id="discount-limit" type="text" inputmode="decimal" value="1,00" data-max="100" required><span class="unit" aria-hidden="true">в. п.</span></div>
+          <label for="discount-limit" data-i18n="discountLimit">Максимальна сумарна знижка</label>
+          <div class="control"><input id="discount-limit" type="text" inputmode="decimal" value="1,00" data-max="100" required><span class="unit" aria-hidden="true" data-i18n="points">в. п.</span></div>
         </div>
         <div id="product-list" class="product-list"></div>
-        <button id="add-product" type="button">Додати свій продукт</button>
-        <p id="product-error" class="error" role="status" hidden>Перевірте максимальну знижку та значення в позначених полях увімкнених продуктів.</p>
+        <button id="add-product" type="button" data-i18n="addProduct">Додати свій продукт</button>
+        <p id="product-error" class="error" role="status" hidden data-i18n="productError">Перевірте максимальну знижку та значення в позначених полях увімкнених продуктів.</p>
       </div>
       <template id="product-template">
         <fieldset class="product">
           <div class="product-header">
             <label class="check"><input type="checkbox" class="product-enabled" checked><span class="product-title"></span></label>
-            <button type="button" class="remove-product" hidden>Видалити</button>
+            <button type="button" class="remove-product" hidden data-i18n="remove">Видалити</button>
           </div>
-          <label class="field product-name" hidden><span>Назва продукту</span><input type="text" class="name-input"></label>
+          <label class="field product-name" hidden><span data-i18n="productName">Назва продукту</span><input type="text" class="name-input"></label>
           <div class="pair">
-            <label class="field"><span>Знижка ставки</span><span class="control"><input class="product-discount" type="text" inputmode="decimal" data-max="100" required><span class="unit" aria-hidden="true">в. п.</span></span></label>
-            <label class="field"><span>Ціна на місяць</span><span class="control"><input class="product-cost" type="text" inputmode="decimal" data-money required><span class="unit" aria-hidden="true">€</span></span></label>
+            <label class="field"><span data-i18n="discount">Знижка ставки</span><span class="control"><input class="product-discount" type="text" inputmode="decimal" data-max="100" required><span class="unit" aria-hidden="true" data-i18n="points">в. п.</span></span></label>
+            <label class="field"><span data-i18n="productCost">Ціна на місяць</span><span class="control"><input class="product-cost" type="text" inputmode="decimal" data-money required><span class="unit" aria-hidden="true">€</span></span></label>
           </div>
           <p class="hint product-hint" data-result>—</p>
         </fieldset>
@@ -158,9 +167,9 @@
     </details>
 
     <section class="panel inside comparison" aria-labelledby="comparison-title">
-      <h2 id="comparison-title">Порівняння цін</h2>
+      <h2 id="comparison-title" data-i18n="comparison">Порівняння цін</h2>
       <table aria-labelledby="comparison-title">
-        <thead><tr><th scope="col">Ціна житла</th><th scope="col">На старті</th><th scope="col">Платіж за кредитом / міс.</th><th scope="col">Разом / міс.</th></tr></thead>
+        <thead><tr><th scope="col" data-i18n="price">Ціна житла</th><th scope="col" data-i18n="atStart">На старті</th><th scope="col" data-i18n="paymentColumn">Платіж за кредитом / міс.</th><th scope="col" data-i18n="totalColumn">Разом / міс.</th></tr></thead>
         <tbody id="comparison">
           <tr data-price="300000"><th scope="row">300&nbsp;000&nbsp;€</th><td data-result>—</td><td data-result>—</td><td data-result>—</td></tr>
           <tr data-price="330000"><th scope="row">330&nbsp;000&nbsp;€</th><td data-result>—</td><td data-result>—</td><td data-result>—</td></tr>
@@ -171,13 +180,14 @@
     </section>
 
     <footer>
-      <p>Орієнтовний розрахунок. Податки: Валенсійська громада з 06.2026. Знижки по продуктах — за публічною пропозицією CaixaBank; точні умови — у FEIN. <a href="https://www.caixabank.es/particular/hipotecas/casafacil.html">CaixaBank CasaFácil</a></p>
-      <p>Для знижки за надходження доходу й картку CaixaBank також вимагає оплату трьох рахунків через банк. Знижка за страхування життя залежить від суми покриття. Вартість продуктів у калькуляторі відповідає введеним сумам.</p>
-      <p>AJD 0,1% застосовується до основного місця проживання. Загальна ставка AJD — 1,4%. Загальна ставка ITP — 9%, для об’єктів вартістю понад 1 млн € — 11%. Можуть діяти пільги. <a href="https://www.boe.es/buscar/act.php?id=BOE-A-1998-8202&amp;p=20260702&amp;tn=0">Закон Валенсійської громади</a></p>
-      <p>Калькулятор бере за податкову базу ціну купівлі. Для ITP і AJD база може бути вищою через довідкову вартість об’єкта. У полі витрат враховуйте оформлення купівлі та оцінку, які оплачуєте ви. Витрати на нотаріуса, реєстр і гестора за оформлення самого іпотечного договору покриває банк. <a href="https://www.catastro.hacienda.gob.es/es-es/usos_fiscales.html">Кадастр Іспанії</a> · <a href="https://clientebancario.bde.es/pcb/es/blog/gastos-de-formalizacion.html">Банк Іспанії</a></p>
+      <p><span data-i18n="note">Орієнтовний розрахунок. Податки: Валенсійська громада з 06.2026. Знижки по продуктах — за публічною пропозицією CaixaBank; точні умови — у FEIN.</span> <a href="https://www.caixabank.es/particular/hipotecas/casafacil.html">CaixaBank CasaFácil</a></p>
+      <p data-i18n="bankNote">Для знижки за надходження доходу й картку CaixaBank також вимагає оплату трьох рахунків через банк. Знижка за страхування життя залежить від суми покриття. Вартість продуктів у калькуляторі відповідає введеним сумам.</p>
+      <p><span data-i18n="taxNote">AJD 0,1% застосовується до основного місця проживання. Загальна ставка AJD — 1,4%. Загальна ставка ITP — 9%, для об’єктів вартістю понад 1 млн € — 11%. Можуть діяти пільги.</span> <a href="https://www.boe.es/buscar/act.php?id=BOE-A-1998-8202&amp;p=20260702&amp;tn=0" data-i18n="regionalLaw">Закон Валенсійської громади</a></p>
+      <p><span data-i18n="costNote">Калькулятор бере за податкову базу ціну купівлі. Для ITP і AJD база може бути вищою через довідкову вартість об’єкта. У полі витрат враховуйте оформлення купівлі та оцінку, які оплачуєте ви. Витрати на нотаріуса, реєстр і гестора за оформлення самого іпотечного договору покриває банк.</span> <a href="https://www.catastro.hacienda.gob.es/es-es/usos_fiscales.html" data-i18n="cadastre">Кадастр Іспанії</a> · <a href="https://clientebancario.bde.es/pcb/es/blog/gastos-de-formalizacion.html" data-i18n="bankOfSpain">Банк Іспанії</a></p>
     </footer>
   </main>
 
+  <script src="./i18n.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
