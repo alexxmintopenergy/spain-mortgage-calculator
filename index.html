@@ -29,12 +29,6 @@
               <label><input type="radio" name="property" value="resale"><span>Вторинне</span></label>
             </div>
           </fieldset>
-          <div class="field">
-            <label for="fees">Нотаріус + реєстр + гестор + оцінка</label>
-            <label class="check"><input id="scale-fees" type="checkbox" checked> Перераховувати зі зміною ціни житла</label>
-            <div class="control"><input id="fees" type="text" inputmode="decimal" value="2 500" data-money aria-describedby="fees-hint" required><span class="unit" aria-hidden="true">€</span></div>
-            <p id="fees-hint" class="hint"></p>
-          </div>
           <div>
             <label class="check"><input id="has-agent" type="checkbox" aria-controls="agent-options"> Ріелтор</label>
             <div id="agent-options" class="agent" hidden>
@@ -47,23 +41,35 @@
           </div>
         </section>
 
-        <section class="section" aria-labelledby="loan-title">
-          <h2 id="loan-title">Іпотека</h2>
-          <div class="pair">
-            <div class="field">
-              <label for="ltv">Частка від ціни</label>
-              <div class="control"><input id="ltv" type="text" inputmode="decimal" value="80" data-max="100" required><span class="unit" aria-hidden="true">%</span></div>
-            </div>
-            <div class="field">
-              <label for="rate">Базова річна ставка</label>
-              <div class="control"><input id="rate" type="text" inputmode="decimal" value="3,95" data-max="100" required><span class="unit" aria-hidden="true">%</span></div>
-            </div>
-          </div>
+        <details>
+          <summary>Нотаріус + реєстр + гестор + оцінка</summary>
           <div class="field">
-            <label for="years">Строк</label>
-            <div class="control"><input id="years" type="text" inputmode="numeric" value="30" data-min="1" data-integer required><span class="unit" aria-hidden="true">років</span></div>
+            <label for="fees">Витрати на оформлення</label>
+            <div class="control"><input id="fees" type="text" inputmode="decimal" value="2 500" data-money aria-describedby="fees-hint" required><span class="unit" aria-hidden="true">€</span></div>
+            <label class="check"><input id="scale-fees" type="checkbox" checked> Перераховувати зі зміною ціни житла</label>
+            <p id="fees-hint" class="hint"></p>
           </div>
-        </section>
+        </details>
+
+        <details>
+          <summary>Іпотека</summary>
+          <div class="section">
+            <div class="pair">
+              <div class="field">
+                <label for="ltv">Частка від ціни</label>
+                <div class="control"><input id="ltv" type="text" inputmode="decimal" value="80" data-max="100" required><span class="unit" aria-hidden="true">%</span></div>
+              </div>
+              <div class="field">
+                <label for="rate">Базова річна ставка</label>
+                <div class="control"><input id="rate" type="text" inputmode="decimal" value="3,95" data-max="100" required><span class="unit" aria-hidden="true">%</span></div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="years">Строк</label>
+              <div class="control"><input id="years" type="text" inputmode="numeric" value="30" data-min="1" data-integer required><span class="unit" aria-hidden="true">років</span></div>
+            </div>
+          </div>
+        </details>
 
         <details>
           <summary>Податкові ставки</summary>
@@ -123,8 +129,8 @@
       </div>
     </div>
 
-    <section class="panel inside comparison" aria-labelledby="products-title">
-      <h2 id="products-title">Продукти банку</h2>
+    <details class="panel inside product-panel">
+      <summary>Продукти банку</summary>
       <div id="product-settings" class="product-settings">
         <p class="hint">Вигода кожного продукту показує, як зміниться платіж, якщо додати або прибрати тільки його.</p>
         <div class="field discount-limit">
@@ -149,7 +155,7 @@
           <p class="hint product-hint" data-result>—</p>
         </fieldset>
       </template>
-    </section>
+    </details>
 
     <section class="panel inside comparison" aria-labelledby="comparison-title">
       <h2 id="comparison-title">Порівняння цін</h2>

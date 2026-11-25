@@ -19,7 +19,6 @@ h2 { font-size: 1.18rem; line-height: 1.25; letter-spacing: -.015em; }
 .panel { min-width: 0; background: white; border: 1px solid var(--line); border-radius: 1.15rem; }
 .form { padding: clamp(1rem, 3vw, 1.6rem); }
 .section { display: grid; gap: .85rem; }
-.section + .section { border-top: 1px solid var(--line); margin-top: 1.35rem; padding-top: 1.25rem; }
 .field { display: grid; gap: .35rem; min-width: 0; }
 .field > label, label.field > span:first-child, legend { font-size: .9rem; font-weight: 650; }
 .control { position: relative; min-width: 0; }
@@ -40,8 +39,9 @@ legend { margin-bottom: .4rem; padding: 0; }
 .agent { display: grid; gap: .35rem; padding: .75rem; border-radius: .65rem; background: #f1f7f4; }
 [hidden] { display: none !important; }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-details { border-top: 1px solid var(--line); margin-top: 1.3rem; padding-top: .55rem; }
-summary { width: fit-content; padding: .55rem 0; color: var(--accent); font-weight: 650; cursor: pointer; }
+.form details { border-top: 1px solid var(--line); margin-top: .35rem; }
+summary { padding: .75rem 0; color: var(--accent); font-weight: 650; cursor: pointer; }
+details:has(input[aria-invalid="true"]) > summary { color: #962620; }
 .tax-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; padding: .55rem 0; }
 .tax-fields input { padding-right: 1.9rem; }
 .hint, footer { color: var(--muted); font-size: .875rem; line-height: 1.5; }
@@ -53,6 +53,8 @@ summary { width: fit-content; padding: .55rem 0; color: var(--accent); font-weig
 .hero-amount { display: block; margin: .28rem 0; font-weight: 720; font-size: clamp(2.05rem, 5.5vw, 3.45rem); letter-spacing: -.055em; line-height: 1.14; overflow-wrap: anywhere; }
 .percent { display: inline-block; color: #b4ebd5; font-size: .95rem; }
 .inside { padding: .9rem clamp(1rem, 3vw, 1.6rem); }
+.product-panel { margin-top: 1.25rem; padding-block: .25rem; }
+.product-panel[open] { padding-bottom: .9rem; }
 .inside h2 { margin: .15rem 0 .55rem; }
 .rows > div { display: flex; align-items: baseline; justify-content: space-between; gap: .55rem; padding: .55rem 0; border-bottom: 1px solid #e9f0ed; }
 .rows > div:last-child { border-bottom: 0; }
